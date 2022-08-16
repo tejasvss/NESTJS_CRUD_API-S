@@ -1,3 +1,4 @@
+import { IsNotEmpty } from 'class-validator';
 import { Permissions } from '../entities/permissions.entity';
 
 export class CreateRoleDto {
@@ -6,5 +7,6 @@ export class CreateRoleDto {
 
     role_description: string;
 
+    @IsNotEmpty()
     permission_id: Permissions;
 }
