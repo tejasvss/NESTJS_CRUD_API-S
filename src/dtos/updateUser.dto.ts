@@ -5,6 +5,8 @@ export class UpdateUserDto {
 
     email: string;
 
-    mobileNumber: string;
+    mobileNumber: number;
+
+    role: number;
 
 }

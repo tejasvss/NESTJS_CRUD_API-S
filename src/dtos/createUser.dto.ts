@@ -11,9 +11,10 @@ export class CreateUserDto {
     email: string;
 
     @IsNotEmpty()
-    mobileNumber: string;
+    mobileNumber: number;
 
     @IsNotEmpty()
-    role_id: Roles;
+    role: number;
 
+    role_id: Roles;
 }

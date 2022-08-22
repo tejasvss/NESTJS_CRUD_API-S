@@ -1,7 +1,6 @@
 // import { Roles } from 'src/users/roles.enum';
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
 import { Roles } from './roles.entity';
-
 
 @Entity()
 export class User {
@@ -9,10 +8,14 @@ export class User {
     user_id: number;
     @Column()
     user_name: string;
-    @Column()
+    @Column({ unique: true })
     email: string;
-    @Column()
-    mobileNumber: string;
+    @Column({ unique: true, type: 'bigint' })
+    mobileNumber: number;
+    @CreateDateColumn()
+    created_at: Date;
+    @CreateDateColumn()
+    updated_at: Date;
     @ManyToOne(() => Roles, (roles: Roles) => roles.role_id)
     @JoinColumn({ name: 'role_id' })
     role_id: Roles;

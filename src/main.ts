@@ -6,7 +6,11 @@ require("dotenv").config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
-  await app.listen(+process.env.SERVER_PORT);
+  app.useGlobalPipes(new ValidationPipe({
+    transformOptions: {
+      enableImplicitConversion: true // allow conversion underneath
+    }
+  }));
+  await app.listen(process.env.PORT || 8080);
 }
 bootstrap();
