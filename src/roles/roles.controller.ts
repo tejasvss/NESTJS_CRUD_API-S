@@ -42,4 +42,10 @@ export class RolesController {
         let roleData = await this.roleService.updateRole(role_id, updateRoleDto);
         return response.status(200).send({ statusCode: 200, message: "Roles fetched succesfully", data: roleData })
     }
+
+    @Get('/getRole')
+    async getRoleById(@Res() response, @Query('role_id') role_id: number): Promise<Roles> {
+        let roleData = await this.roleService.getRoleById(role_id);
+        return response.status(200).send({ statusCode: 200, message: "Role fetched successfully", data: roleData })
+    }
 }

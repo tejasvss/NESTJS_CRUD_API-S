@@ -8,7 +8,8 @@ import {
     Put,
     HttpCode,
     HttpStatus,
-    Res
+    Res,
+    Query
 } from '@nestjs/common';
 import { throws } from 'assert';
 
@@ -40,5 +41,11 @@ export class PermissionsController {
     async updatePermissionById(@Res() response, @Param('permission_id') permission_id: number, @Body() updatePermissionDto: UpdatePermissionDto): Promise<Permissions> {
         let data = await this.permissionsService.updatePermission(permission_id, updatePermissionDto);
         return response.status(200).send({ status: 200, Message: "Permissions updated succesfully", Data: data })
+    }
+
+    @Get('/getPermission')
+    async getPermissionById(@Res() response, @Query('permission_id') permission_id: number): Promise<Permissions> {
+        let permissionData = await this.permissionsService.getPermissionById(permission_id);
+        return response.status(200).send({ status: 200, Message: 'Permission fetched successfully', Data: permissionData })
     }
 }
