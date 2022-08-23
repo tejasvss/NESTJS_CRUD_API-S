@@ -48,4 +48,10 @@ export class PermissionsController {
         let permissionData = await this.permissionsService.getPermissionById(permission_id);
         return response.status(200).send({ status: 200, Message: 'Permission fetched successfully', Data: permissionData })
     }
+
+    @Delete('/deletePermission')
+    async deletePermissionById(@Res() response, @Query('permission_id') permission_id: number): Promise<void> {
+        let data = await this.permissionsService.deletePermissionById(permission_id);
+        return response.status(200).send({ statusCode: 200, message: "Permission record deleted successfully", data: {} })
+    }
 }

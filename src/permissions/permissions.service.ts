@@ -53,4 +53,14 @@ export class PermissionsService {
         await this.permissionsRepository.save(checkPermission);
         return checkPermission;
     }
+
+    async deletePermissionById(permission_id: number): Promise<void> {
+
+        const response = await this.permissionsRepository.delete(permission_id);
+        console.log(response)
+
+        if (response.affected == 0) {
+            throw new NotFoundException(`For your entered permission_id: ${permission_id} no data found`)
+        }
+    }
 }
