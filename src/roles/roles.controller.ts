@@ -48,4 +48,10 @@ export class RolesController {
         let roleData = await this.roleService.getRoleById(role_id);
         return response.status(200).send({ statusCode: 200, message: "Role fetched successfully", data: roleData })
     }
+
+    @Delete('/deleteRole')
+    async deleteServiceById(@Res() response, @Query('role_id') role_id: number): Promise<void> {
+        const data = await this.roleService.deleteServiceById(role_id);
+        return response.status(200).send({ statusCode: 200, message: "Role deleted successfully", data: {} })
+    }
 }

@@ -75,4 +75,14 @@ export class RoleService {
         return await this.getRoleById(role_id);
     }
 
+    async deleteServiceById(role_id: number): Promise<void> {
+
+        const response = await this.roleRepository.delete(role_id);
+        console.log(response)
+
+        if (response.affected == 0) {
+            throw new NotFoundException(`For your entered role_id: ${role_id} no data found`)
+        }
+    }
+
 }
