@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-// import { User } from 'src/entities/user.entity';
+import { User } from 'src/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
 import { Roles } from './entities/roles.entity';
 import { UserModule } from './users/user.module';
 import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { Permissions } from './entities/permissions.entity';
+import { ConfigModule } from '@nestjs/config';
 require("dotenv").config();
 
 
@@ -22,7 +22,7 @@ require("dotenv").config();
       username: process.env.DB_USERNAME,
       password: process.env.PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Roles, Permissions],
+      entities: [Roles, Permissions, User],
       autoLoadEntities: true,
       synchronize: true
     })
