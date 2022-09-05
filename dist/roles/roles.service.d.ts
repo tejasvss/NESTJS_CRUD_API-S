@@ -1,0 +1,15 @@
+import { Roles } from 'src/entities/roles.entity';
+import { Repository } from 'typeorm';
+import { CreateRoleDto } from 'src/dtos/createRole.dto';
+import { Permissions } from 'src/entities/permissions.entity';
+import { UpdateRoleDto } from 'src/dtos/updateRole.dto';
+export declare class RoleService {
+    private readonly roleRepository;
+    private readonly permissionRepository;
+    constructor(roleRepository: Repository<Roles>, permissionRepository: Repository<Permissions>);
+    createRole(createRoleDto: CreateRoleDto): Promise<Roles>;
+    getRoles(): Promise<Roles[]>;
+    getRoleById(role_id: number): Promise<Roles>;
+    updateRole(role_id: number, updateRoleDto: UpdateRoleDto): Promise<Roles>;
+    deleteServiceById(role_id: number): Promise<void>;
+}
