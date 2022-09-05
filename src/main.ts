@@ -12,6 +12,6 @@ async function bootstrap() {
       enableImplicitConversion: true // allow conversion underneath
     }
   }));
-  await app.listen(+process.env.PORT || 8080);
+  await app.listen(process.env.PORT || 8080);
 }
 bootstrap();

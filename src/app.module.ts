@@ -20,7 +20,7 @@ require("dotenv").config();
       host: process.env.DB_HOSTNAME,
       port: +process.env.DB_PORTNUMBER,
       username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
+      password: process.env.PASSWORD,
       database: process.env.DB_NAME,
       entities: [Roles, Permissions, User],
       autoLoadEntities: true,
