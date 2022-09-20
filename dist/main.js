@@ -12,7 +12,7 @@ async function bootstrap() {
             enableImplicitConversion: true
         }
     }));
-    await app.listen(process.env.PORT || 8080);
+    await app.listen(9001);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

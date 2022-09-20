@@ -13,11 +13,12 @@ const roles_controller_1 = require("./roles.controller");
 const roles_service_1 = require("./roles.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const permissions_entity_1 = require("../entities/permissions.entity");
+const user_entity_1 = require("../entities/user.entity");
 let RolesModule = class RolesModule {
 };
 RolesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([roles_entity_1.Roles, permissions_entity_1.Permissions])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([roles_entity_1.Roles, permissions_entity_1.Permissions, user_entity_1.User])],
         controllers: [roles_controller_1.RolesController],
         providers: [roles_service_1.RoleService]
     })

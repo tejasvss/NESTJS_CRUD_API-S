@@ -5,6 +5,7 @@ import { In, Repository } from 'typeorm';
 import { CreateRoleDto } from 'src/dtos/createRole.dto';
 import { Permissions } from 'src/entities/permissions.entity';
 import { UpdateRoleDto } from 'src/dtos/updateRole.dto';
+import { User } from 'src/entities/user.entity';
 
 
 @Injectable()
@@ -13,7 +14,9 @@ export class RoleService {
         @InjectRepository(Roles)
         private readonly roleRepository: Repository<Roles>,
         @InjectRepository(Permissions)
-        private readonly permissionRepository: Repository<Permissions>
+        private readonly permissionRepository: Repository<Permissions>,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>
     ) { }
 
 
@@ -75,8 +78,30 @@ export class RoleService {
         return await this.getRoleById(role_id);
     }
 
-    async deleteServiceById(role_id: number): Promise<void> {
+    async deleteServiceById(role_id: any): Promise<void> {
 
+
+        let usersData = await this.userRepository.find({ where: { role_id } })
+        usersData = JSON.parse(JSON.stringify(usersData))
+
+
+        let modifyData = await Promise.all(
+            usersData.map(async (user) => {
+                user.role_id = null;
+                user = await this.userRepository.save(user)
+                console.log({ user })
+                return user;
+            })
+
+        )
+        // if (usersData.length != 0) {
+        //     Promise.all([usersData.map(async (x) => {
+        //         x.role_id = null;
+        //         x = await this.userRepository.save(x)
+        //         console.log({ x })
+        //     })
+        //     ])
+        // }
         const response = await this.roleRepository.delete(role_id);
         console.log(response)
 

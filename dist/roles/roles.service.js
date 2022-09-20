@@ -18,10 +18,12 @@ const typeorm_1 = require("@nestjs/typeorm");
 const roles_entity_1 = require("../entities/roles.entity");
 const typeorm_2 = require("typeorm");
 const permissions_entity_1 = require("../entities/permissions.entity");
+const user_entity_1 = require("../entities/user.entity");
 let RoleService = class RoleService {
-    constructor(roleRepository, permissionRepository) {
+    constructor(roleRepository, permissionRepository, userRepository) {
         this.roleRepository = roleRepository;
         this.permissionRepository = permissionRepository;
+        this.userRepository = userRepository;
     }
     async createRole(createRoleDto) {
         let { permission_Ids, role_name } = createRoleDto;
@@ -66,6 +68,14 @@ let RoleService = class RoleService {
         return await this.getRoleById(role_id);
     }
     async deleteServiceById(role_id) {
+        let usersData = await this.userRepository.find({ where: { role_id } });
+        usersData = JSON.parse(JSON.stringify(usersData));
+        let modifyData = await Promise.all(usersData.map(async (user) => {
+            user.role_id = null;
+            user = await this.userRepository.save(user);
+            console.log({ user });
+            return user;
+        }));
         const response = await this.roleRepository.delete(role_id);
         console.log(response);
         if (response.affected == 0) {
@@ -77,7 +87,9 @@ RoleService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(roles_entity_1.Roles)),
     __param(1, (0, typeorm_1.InjectRepository)(permissions_entity_1.Permissions)),
+    __param(2, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], RoleService);
 exports.RoleService = RoleService;
